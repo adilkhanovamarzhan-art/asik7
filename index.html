@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignment #7 – jQuery (Selectors, Effects, Animations)</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      background-color: #fff1f5;
+      color: #333;
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #be558a;
+    }
+    section {
+      border: 2px solid #f3bcd1;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 10px;
+      background: #fff9fb;
+      box-shadow: 0 0 8px #f7c7da;
+    }
+    button {
+      margin: 5px;
+      padding: 8px 15px;
+      background-color: #e994b5;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #c46489;
+    }
+    img {
+      border-radius: 10px;
+      margin: 10px;
+    }
+    #triangle {
+      width: 0;
+      height: 0;
+      border-left: 50px solid transparent;
+      border-right: 50px solid transparent;
+      border-bottom: 90px solid #ff5c9a;
+      margin: 40px auto;
+      position: relative;
+    }
+    #gallery {
+      text-align: center;
+    }
+    #mainImage {
+      width: 400px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 2px solid #f4a6c3;
+      margin-bottom: 10px;
+      box-shadow: 0 0 10px #f9b7d0;
+    }
+    .thumb {
+      width: 120px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 6px;
+      cursor: pointer;
+      opacity: 0.8;
+      border: 2px solid #f8c7dc;
+    }
+    .thumb:hover {
+      opacity: 1;
+      border-color: #ff85b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Assignment 7 – jQuery Practice</h1>
+  <h2>Marzhan Adilkhanova – MT-2405</h2>
+
+  <section>
+    <h3>Task 0–1: Setup & Selectors</h3>
+    <p id="textDemo">This text will change.</p>
+    <button id="changeText">Change Text</button>
+    <button id="changeStyle">Change Style</button>
+  </section>
+
+  <section>
+    <h3>Task 2–4: Effects</h3>
+    <p id="effectText">Hello! I can hide, fade, or slide.</p>
+    <button id="hideBtn">Hide</button>
+    <button id="showBtn">Show</button>
+    <button id="toggleBtn">Toggle</button><br><br>
+
+    <img id="fadeImg" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400" alt="Example" width="200">
+    <button id="fadeInBtn">Fade In</button>
+    <button id="fadeOutBtn">Fade Out</button>
+    <button id="fadeToggleBtn">Fade Toggle</button><br><br>
+
+    <div id="slidePanel" style="background:#ffe3ed; padding:10px; border-radius:10px;">This panel can slide up and down.</div>
+    <button id="slideUpBtn">Slide Up</button>
+    <button id="slideDownBtn">Slide Down</button>
+    <button id="slideToggleBtn">Slide Toggle</button>
+  </section>
+
+  <section>
+    <h3>Task 5–7: DOM Manipulation</h3>
+    <ul id="listDemo">
+      <li>Item 1</li>
+      <li>Item 2</li>
+    </ul>
+    <button id="addItem">Add Item</button>
+    <button id="removeItem">Remove Last Item</button><br><br>
+
+    <img id="attrImg" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=200" alt="Image" width="150">
+    <button id="changeImg">Change Image</button>
+    <a id="myLink" href="https://google.com" target="_blank">Go to Google</a>
+    <button id="changeLink">Change Link</button><br><br>
+
+    <form id="liveForm">
+      <input type="text" id="nameInput" placeholder="Name">
+      <input type="email" id="emailInput" placeholder="Email">
+    </form>
+    <p>Name: <span id="liveName"></span></p>
+    <p>Email: <span id="liveEmail"></span></p>
+  </section>
+
+  <section>
+    <h3>Task 8–10: Animations (Triangle)</h3>
+    <div id="triangle"></div>
+    <button id="animateBtn">Animate</button>
+    <button id="sequenceBtn">Sequential</button>
+    <button id="combinedBtn">Combined</button>
+  </section>
+
+  <section>
+    <h3>Task 11: Mini Project – Image Gallery</h3>
+    <div id="gallery">
+      <img id="mainImage" src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800" alt="Main">
+      <div>
+        <img class="thumb" src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=600" alt="1">
+        <img class="thumb" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600" alt="2">
+        <img class="thumb" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600" alt="3">
+        <img class="thumb" src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=600" alt="4">
+      </div>
+    </div>
+  </section>
+
+  <script>
+    $(document).ready(function() {
+      console.log("jQuery is ready!");
+
+      // Task 1
+      $("#changeText").click(function() {
+        $("#textDemo").text("Text changed with jQuery!");
+      });
+      $("#changeStyle").click(function() {
+        $("#textDemo").css({"color": "#d63384", "font-size": "20px"});
+      });
+
+      // Task 2–4
+      $("#hideBtn").click(() => $("#effectText").hide());
+      $("#showBtn").click(() => $("#effectText").show());
+      $("#toggleBtn").click(() => $("#effectText").toggle());
+
+      $("#fadeInBtn").click(() => $("#fadeImg").fadeIn());
+      $("#fadeOutBtn").click(() => $("#fadeImg").fadeOut());
+      $("#fadeToggleBtn").click(() => $("#fadeImg").fadeToggle());
+
+      $("#slideUpBtn").click(() => $("#slidePanel").slideUp());
+      $("#slideDownBtn").click(() => $("#slidePanel").slideDown());
+      $("#slideToggleBtn").click(() => $("#slidePanel").slideToggle());
+
+      // Task 5–7
+      $("#addItem").click(() => $("#listDemo").append("<li>New Item</li>"));
+      $("#removeItem").click(() => $("#listDemo li:last").remove());
+
+      $("#changeImg").click(() => $("#attrImg").attr("src", "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=200"));
+      $("#changeLink").click(() => $("#myLink").attr("href", "https://astanait.edu.kz").text("Go to AITU"));
+
+      $("#nameInput").on("keyup", () => $("#liveName").text($("#nameInput").val()));
+      $("#emailInput").on("keyup", () => $("#liveEmail").text($("#emailInput").val()));
+
+      // Task 8–10 (Triangle)
+      $("#animateBtn").click(() => {
+        $("#triangle").animate({left: "200px"}, 600).animate({left: "0px"}, 600);
+      });
+
+      $("#sequenceBtn").click(() => {
+        $("#triangle")
+          .animate({top: "50px"}, 400)
+          .animate({left: "150px"}, 400)
+          .animate({top: "0px"}, 400)
+          .animate({left: "0px"}, 400);
+      });
+
+      $("#combinedBtn").click(() => {
+        $("#triangle").animate({
+          top: "60px",
+          left: "100px",
+          opacity: 0.5
+        }, 600).animate({
+          top: "0px",
+          left: "0px",
+          opacity: 1
+        }, 600);
+      });
+
+      // Gallery
+      $(".thumb").click(function() {
+        let newSrc = $(this).attr("src");
+        $("#mainImage").fadeOut(300, function() {
+          $(this).attr("src", newSrc).fadeIn(300);
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
